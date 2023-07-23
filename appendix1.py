@@ -1,4 +1,5 @@
 import pandas as pd
+import re
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 
@@ -10,6 +11,12 @@ data = df["reviewText"].tolist()
 
 # 合并所有评论为一个字符串
 all_reviews = " ".join(data)
+# 定义过滤词列表（可根据需要添加其他需要过滤的词）
+stopwords = ["the", "and", "to", "in", "it", "is", "that", "of", "this", "for", "i", "but", "not", "with", "on", "as", "are", "at", "be", "have", "has", "had", "if", "was", "were", "by", "an", "a", "you", "he", "they"]
+
+# 去除文本中的非字母字符和过滤词，并将所有单词转换为小写
+all_reviews = " ".join([word.lower() for word in all_reviews.split() if word.lower() not in stopwords])
+
 
 # 统计词频
 word_freq = pd.Series(all_reviews.split()).value_counts()
