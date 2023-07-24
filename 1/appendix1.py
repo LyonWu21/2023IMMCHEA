@@ -22,14 +22,25 @@ all_reviews = " ".join([word.lower() for word in all_reviews.split() if word.low
 word_freq = pd.Series(all_reviews.split()).value_counts()
 # 获取频数最高的前十个词
 top_ten_words = word_freq.head(10)
+# 设置要绘制的前N个高频词
+top_n = 20
 
+# 获取频数最高的前N个词
+top_words = word_freq.head(top_n)
 # 创建柱状图
-plt.figure(figsize=(10, 5))
-plt.bar(top_ten_words.index, top_ten_words.values, color="pink")
+plt.figure(figsize=(12, 6))
+bars = plt.bar(top_words.index, top_words.values, color="pink")
 plt.xlabel('Words')
 plt.ylabel('Frequency')
-plt.title('Top 10 Most Frequent Words')
+plt.title("Top 20 Most Frequent Words",)
 plt.xticks(rotation=45)
+
+# 添加词频数值标签
+for bar in bars:
+    height = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width() / 2, height, str(height), ha='center', va='bottom')
+
+plt.tight_layout()
 plt.show()
 
 # 创建词云图
